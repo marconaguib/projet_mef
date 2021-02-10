@@ -12,8 +12,8 @@ from maillage import Point, Segment, Triangle, Mesh
 
 PIECE=1
 MUR=1
-RADIATEUR=2
-FENETRE=3
+FENETRE=2
+RADIATEUR=3
 
 def f(x,y):
     return 0
