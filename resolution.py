@@ -1,11 +1,9 @@
-from scipy.sparse import coo_matrix
-import itertools
+import scipy.sparse as sparse
+from scipy.sparse import coo_matrix, linalg
 import numpy as np
 import sys
 import gmsh
 import matplotlib.pylab as plt
-import scipy.sparse as sparse
-from scipy.sparse import linalg
 import matplotlib.cm as cm
 
 from assemblage import *
@@ -42,8 +40,8 @@ Integrale(m,2,PIECE,f,b,2)
 Dirichlet(m,1,RADIATEUR,dirichlet_fenetre,t,b)
 Dirichlet(m,1,FENETRE,dirichlet_radiateur,t,b)
 # Résolution
-A = (sparse.coo_matrix(t.data)).tocsr()
-U = sparse.linalg.spsolve(A, b)
+A = (coo_matrix(t.data)).tocsr()
+U = linalg.spsolve(A, b)
 
 # Visualisation
 x = [pt.x for pt in m.Points]
