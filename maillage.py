@@ -101,7 +101,7 @@ class Mesh():
         for elem in self.getElements(dim,physical_tag):
             Points+=[i for i in elem.points]
         return list(set(Points))
-    def GmshToMesh(self,h=0.08,filename=""):
+    def GmshToMesh(self,filename=""):
         gmsh.open(filename)
         res=gmsh.model.mesh.getNodes()
         if not len(res[1]):
