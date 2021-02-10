@@ -10,7 +10,7 @@ Il s'agit d'illustrer la température en tout point de l'espace d'un appartement
 ## Exécution "rapide"
 `python3 resolution.py`
 
-## Résultat attendu
+## Résultat
 ![temp][temperature]
 
 ## Scripts
