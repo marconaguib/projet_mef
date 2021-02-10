@@ -32,7 +32,7 @@ gmsh.initialize(sys.argv)
 model = gmsh.model
 model.add("mon_modele")
 
-m.GmshToMesh(h=1,filename="mesh__pb.msh")
+m.GmshToMesh(h=1,filename="mesh_pb.msh")
 t=Triplet()
 Mass(m,dim=2,physical_tag=PIECE,triplets=t)
 # Rigidite(m,dim=2,physical_tag=CARRE,triplets=t)
