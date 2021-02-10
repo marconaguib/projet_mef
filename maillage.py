@@ -1,6 +1,7 @@
 import itertools
 import gmsh
 import numpy as np
+import sys
 
 
 def phiRef(element, i:int, param:[float]):
@@ -12,7 +13,7 @@ def phiRef(element, i:int, param:[float]):
         elif i==2:
             return(param[1])
         else:
-            print("Bad i")
+            print("[MAILLAGE] Bad i")
             sys.exit(1)
 
 def psiRef(element, i:int, param:[float]):
@@ -73,7 +74,7 @@ class Triangle():
             poids=[1/6,1/6,1/6]
             coord_param=[[1/6,1/6],[4/6,1/6],[1/6,4/6]]
         else:
-            print("Bad order")
+            print("[MAILLAGE] Bad order")
             sys.exit(1)
         coord_phys=[]
         for j in range(len(coord_param)):
@@ -93,7 +94,7 @@ class Mesh():
         elif(dim==2):
             return([i for i in self.Triangles if i.tag==physical_tag])
         else:
-            print("Bad dimension")
+            print("[MAILLAGE] Bad dimension")
             sys.exit(1)
     def getPoints(self, dim, physical_tag):
         Points=[]
@@ -101,26 +102,12 @@ class Mesh():
             Points+=[i for i in elem.points]
         return list(set(Points))
     def GmshToMesh(self,h=0.08,filename=""):
-        if filename:
-            gmsh.open(filename)
-        else :
-            #mesh par defaut
-            gmsh.model.geo.addPoint(0,0,0,h,1);
-            gmsh.model.geo.addPoint(0,1,0,h,2);
-            gmsh.model.geo.addPoint(1,1,0,h,3);
-            gmsh.model.geo.addPoint(1,0,0,h,4);
-            gmsh.model.geo.addLine(1,2);
-            gmsh.model.geo.addLine(2,3);
-            gmsh.model.geo.addLine(3,4);
-            gmsh.model.geo.addLine(4,1);
-            gmsh.model.geo.addCurveLoop([1, 2, 3, 4], 1)
-            gmsh.model.geo.addPlaneSurface([1],1)
-            gmsh.model.geo.addPhysicalGroup(1, [1,2,3,4], 7)
-            gmsh.model.geo.addPhysicalGroup(2, [1], 5)
-            gmsh.model.geo.synchronize()
-            gmsh.model.mesh.generate(2)
-        #Points
+        gmsh.open(filename)
         res=gmsh.model.mesh.getNodes()
+        if not len(res[1]):
+            print("[MAILLAGE] Le fichier {} semble vide...".format(filename))
+            sys.exit(1)
+        #Points
         X=np.array([res[1][i] for i in range(0,len(res[1]),3)])
         Y=np.array([res[1][i] for i in range(1,len(res[1]),3)])
         for i in range(len(X)):
