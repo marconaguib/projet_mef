@@ -8,7 +8,7 @@ Il s'agit d'illustrer la température en tout point de l'espace d'un appartement
 
 
 ## Exécution "rapide"
-`python3 resolution.py`
+`python3 resolution.py`, elle met environ 30 secondes.
 
 ## Résultat
 ![temp][temperature]
