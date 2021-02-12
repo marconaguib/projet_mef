@@ -8,13 +8,16 @@ Il s'agit d'illustrer la température en tout point de l'espace d'un appartement
 
 
 ## Exécution "rapide"
-`python3 resolution.py`
+`python3 resolution.py`, elle met environ 30 secondes.
 
-## Résultat attendu
+## Résultat
 ![temp][temperature]
 
 ## Scripts
-
+- [maillage.py](maillage.py) : Classes Points, Segment, Triangle et Mesh
+- [assemblage.py](assemblage.py) : Classe Triplet et assemblage des différentes matrices
+- [mesh_pb.geo](mesh_pb.geo) : Geométrie du problème (appartement) en GMSH
+- [resolution.py](resolution.py) : Données du problème, appels aux fonction et plot
 
 [appartement]: https://github.com/marconaguib/projet_mef/blob/master/appart.png "Joli appartement"
 [temperature]: https://github.com/marconaguib/projet_mef/blob/master/temp.png "Température calculée en tout point"
