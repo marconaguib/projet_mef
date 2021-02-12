@@ -14,9 +14,10 @@ Avec :
 - T_c = 25
 - T_f = -10
 
+On utilise la méthode des éléments finis, avec une finesse h = 0.1. Nous calculons la matrice de rigidité. Nous appliquons les conditions de Dirichlet sur les fenêtres et les radiateurs. Puis nous approchons l'intégrale du membre de droite par une quadrature d'ordre 2. Enfin, nous résolvons le système linéaire à l'aide de la libraire Scipy.
 
 ## Exécution "rapide"
-`python3 resolution.py`, elle met environ 30 secondes.
+`python3 resolution.py`, elle met environ 20 secondes.
 
 ## Résultat
 ![temp][temperature]
