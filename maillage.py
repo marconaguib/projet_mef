@@ -3,7 +3,7 @@ import gmsh
 import numpy as np
 import sys
 
-
+#Phi du triangle de référence
 def phiRef(element, i:int, param:[float]):
     if element.name=="Triangle":
         if i==0:
@@ -16,9 +16,11 @@ def phiRef(element, i:int, param:[float]):
             print("[MAILLAGE] Bad i")
             sys.exit(1)
 
+#Ici, psi = phi
 def psiRef(element, i:int, param:[float]):
     return(phiRef(element,i,param))    
 
+#Classes de la triangulation
 class Point():
     id_iter = itertools.count()
     def __init__(self,x,y):
@@ -141,5 +143,6 @@ class Mesh():
                     for i in range(len(ids_triangles)):
                         t=Triangle(A[i],B[i],C[i],tag)
                         self.Triangles.append(t)
+                    
     def Loc2Glob(self,p,i):
         return(self.Triangles[p].points[i].id)

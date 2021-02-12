@@ -2,6 +2,7 @@ from maillage import Point, Segment, Triangle, Mesh
 import numpy as np
 from scipy.sparse import coo_matrix
 
+#Phi du triangle de référence
 def phiRef(element, i:int, param:[float]):
     if element.name=="Triangle":
         if i==0:
@@ -14,7 +15,7 @@ def phiRef(element, i:int, param:[float]):
             print("Bad i")
             sys.exit(1)
     
-
+#Gradient de phi 
 def grad_phi(element, i):
     if element.name=="Triangle":
         if i==0:
@@ -24,6 +25,7 @@ def grad_phi(element, i):
         elif i==2:
             return(np.array([0,1]))
 
+#Matrice sous forme COO
 class Triplet:
     def __init__(self):
         self.data = ([], ([], []))
@@ -35,7 +37,8 @@ class Triplet:
         self.data[1][1].append(J)
     def at(self, mon_i, mon_j):
         return(coo_matrix(self.data).toarray()[mon_i][mon_j])
-        
+
+#Masse et rigidité élémentaire        
 def mass_elem(element, triplets, alpha =1.):
     if element.name=="Triangle":
         coef = element.area()
@@ -65,6 +68,7 @@ def rigidite_elem(element, triplets, alpha =1.):
                 triplets.append(i,j,coef*res)
     return triplets
 
+#Assemblage de Masse et de Rigidité
 def Mass(msh, dim, physical_tag, triplets):
     elements=msh.getElements(dim,physical_tag)
     print("[ASSEMBLAGE] Remplissage de la matrice de masse")
@@ -91,6 +95,7 @@ def Rigidite(msh, dim, physical_tag, triplets):
                 triplets.append(I, J, matrice_locale.at(i,j))
     return triplets
 
+#Quadrature
 def Integrale(msh:Mesh, dim:int, physical_tag:int, f, B:np.array, order=2):
     M=3 if order==2 else 1
     elements=msh.getElements(dim,physical_tag)
@@ -103,6 +108,7 @@ def Integrale(msh:Mesh, dim:int, physical_tag:int, f, B:np.array, order=2):
             for m in range(M):
                 B[I]+=coef*omega[m]*f(c_phys[m][0],c_phys[m][1])*phiRef(elem,i,c_param[m])
 
+#Application de la condition de Dirichlet sur le bord
 def Dirichlet(msh, dim, physical_tag, g, triplets, B):
     points=msh.getPoints(dim,physical_tag)
     print("[ASSEMBLAGE] Application de la condition de Dirichlet pour le physical_tag "+str(physical_tag))

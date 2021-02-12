@@ -9,7 +9,7 @@ import matplotlib.cm as cm
 from assemblage import *
 from maillage import Point, Segment, Triangle, Mesh  
 
-
+#Données
 PIECE=1
 MUR=1
 RADIATEUR=2
@@ -24,6 +24,7 @@ def dirichlet_fenetre(x,y):
 def dirichlet_radiateur(x,y):
     return 25
 
+#Initialisation GMSH
 m=Mesh()
 
 gmsh.initialize(sys.argv)
@@ -33,14 +34,18 @@ model.add("mon_modele")
 m.GmshToMesh(filename="mesh_pb.msh")
 t=Triplet()
 
+#Calcul du membre de gauche
 # Pas de masse comme c=0 ici
 # Mass(m,dim=2,physical_tag=PIECE,triplets=t)
 Rigidite(m,dim=2,physical_tag=PIECE,triplets=t)
 
 b=np.zeros(m.Npts)
-Integrale(m,2,PIECE,f,b,2)
 Dirichlet(m,1,RADIATEUR,dirichlet_radiateur,t,b)
 Dirichlet(m,1,FENETRE,dirichlet_fenetre,t,b)
+
+#Calcul du membre de droite
+Integrale(m,2,PIECE,f,b,2)
+
 # Résolution
 A = (coo_matrix(t.data)).tocsr()
 U = linalg.spsolve(A, b)
