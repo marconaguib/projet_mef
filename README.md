@@ -5,6 +5,14 @@ Il s'agit d'illustrer la température en tout point de l'espace d'un appartement
 
 ![appartement][appartement]
 
+Avec :
+- L = 10
+- l = 8
+- d = 0.5
+- Longueur d'une fenêtre = 1
+- Longueur d'un radiateur = 1
+- T_c = 25
+- T_f = -10
 
 
 ## Exécution "rapide"
