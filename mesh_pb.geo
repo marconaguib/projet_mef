@@ -2,7 +2,7 @@
 
 // Partie 1 : construction géométrique
 
-// ConstanteS
+// Constantes
    h = 0.1;
    L = 10;              
    l =8 ; 

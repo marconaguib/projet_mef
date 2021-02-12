@@ -111,6 +111,6 @@ def Dirichlet(msh, dim, physical_tag, g, triplets, B):
         for indice in range(len(triplets.data[0])):
             if triplets.data[1][0][indice]==I:
                 triplets.data[0][indice]=0
-                triplets.append(I,I,1)
-                B[I]=g(p.x,p.y)
+        triplets.append(I,I,1)
+        B[I]=g(p.x,p.y)
     return
